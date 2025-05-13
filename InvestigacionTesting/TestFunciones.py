@@ -5,12 +5,12 @@ from Funciones import sumar, mayorQue
 
 
 # Se crea una clase para testear las funciones
-# La clase TestSuma hereda los metodos de la clase TestCase. La clase TestCase usa los metodos de unittest para aplicar las pruebas
+# La clase TestOperaciones hereda los metodos de la clase TestCase. La clase TestCase usa los metodos de unittest para aplicar las pruebas
 
 class TestOperaciones(unittest.TestCase):
     def test_sumar(self):
         # assertEqual permite verificar si a y b son iguales
-        self.assertEqual(sumar(2, 3), 5)
+        self.assertEqual(sumar(5, 3), 5)
 
     def test_mayorQue_true(self):
         # assertTrue permite verificar si la condicion es verdadera
