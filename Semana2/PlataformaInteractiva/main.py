@@ -10,13 +10,13 @@ def menu():
 
 def ejecutar_tema(opcion):
     if opcion == "1":
-        respuesta = input("Con SI o no, responsda si en Pyhthon se pueden hacer condicionales anidados")
+        respuesta = input("Con SI o no, responsda si en Pyhthon se pueden hacer condicionales anidados\n")
         print("✅ Correcto" if condicionales.ejercicio_1(respuesta) else "❌ Incorrecto")
     elif opcion == "2":
-        respuesta = input("¿Cuántas veces se imprime 'Hola' si for i in range(3)? ")
+        respuesta = input("¿Cuántas veces se imprime 'Hola' si for i in range(3)? \n")
         print("✅ Correcto" if ciclos.ejercicio_1(respuesta) else "❌ Incorrecto")
     elif opcion == "3":
-        respuesta = input("¿Qué palabra clave se usa para definir una función en Python? ")
+        respuesta = input("¿Qué palabra clave se usa para definir una función en Python? \n")
         print("✅ Correcto" if funciones.ejercicio_1(respuesta) else "❌ Incorrecto")
 
 if __name__ == "__main__":

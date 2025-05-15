@@ -1,31 +1,312 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portal Ciudadano</title>
-    <link rel="stylesheet" href="/static/estilo.css">
+    <title>Sistema de Inventario</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4a6fa5;
+            --secondary-color: #166088;
+            --accent-color: #4fc3a1;
+            --light-bg: #f8f9fa;
+            --dark-text: #343a40;
+            --light-text: #f8f9fa;
+            --error-color: #dc3545;
+            --success-color: #28a745;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-bg);
+            color: var(--dark-text);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: var(--light-text);
+            padding: 1.5rem 0;
+            text-align: center;
+            border-radius: 10px 10px 0 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        header h1 {
+            font-size: 2.2rem;
+        }
+        
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .upload-box {
+            border: 2px dashed var(--primary-color);
+            border-radius: 10px;
+            padding: 3rem 2rem;
+            text-align: center;
+            margin: 2rem 0;
+            background-color: rgba(74, 111, 165, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .upload-box:hover {
+            background-color: rgba(74, 111, 165, 0.1);
+        }
+        
+        .upload-icon {
+            font-size: 3rem;
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .file-input {
+            display: none;
+        }
+        
+        .file-label {
+            background-color: var(--accent-color);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            display: inline-block;
+            margin-top: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .file-label:hover {
+            background-color: #3da58a;
+            transform: translateY(-2px);
+        }
+        
+        .submit-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: block;
+            margin: 2rem auto 0;
+            transition: all 0.3s ease;
+        }
+        
+        .submit-btn:hover {
+            background-color: #0d4d6d;
+            transform: translateY(-2px);
+        }
+        
+        .submit-btn:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        
+        .instructions {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: #f1f8ff;
+            border-left: 4px solid var(--primary-color);
+            border-radius: 5px;
+        }
+        
+        .instructions h3 {
+            color: var(--secondary-color);
+            margin-bottom: 0.8rem;
+        }
+        
+        .instructions ul {
+            list-style-type: none;
+            margin-left: 1rem;
+        }
+        
+        .instructions li {
+            margin-bottom: 0.5rem;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+        
+        .instructions li::before {
+            content: "\f00c";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            color: var(--accent-color);
+            position: absolute;
+            left: 0;
+        }
+        
+        .filename-display {
+            margin-top: 1rem;
+            font-weight: 500;
+            color: var(--secondary-color);
+            background-color: rgba(79, 195, 161, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            display: none;
+        }
+        
+        .alert {
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 5px;
+            font-weight: 500;
+        }
+        
+        .alert-error {
+            background-color: rgba(220, 53, 69, 0.1);
+            color: var(--error-color);
+            border: 1px solid rgba(220, 53, 69, 0.3);
+        }
+        
+        .alert-success {
+            background-color: rgba(40, 167, 69, 0.1);
+            color: var(--success-color);
+            border: 1px solid rgba(40, 167, 69, 0.3);
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 2rem;
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+    </style>
 </head>
 <body>
-    <h1>Bienvenido al Portal de Ciudadanos</h1>
-    <nav>
-        <ul>    
-            <li><a href="/reportes">Reportes Ciudadano</a></li>
-            <li><a href="/aire">Caldiad del aire</a></li>
-            <li><a href="/censo">Censo Comunitario</a></li>
-            <li><a href="/educacion">Educancion </a></li>
-            <li><a href="/movilidad">Movilidad Urbana</a></li>
-        </ul>
-    </nav>
-    <br><br><br>
-    <section>
-        <h2>Servicios Disponibles</h2>
-        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Laudantium, nostrum hic perferendis harum earum laboriosam placeat dolores, maxime porro reiciendis voluptate at facilis aut, temporibus qui nobis ad odit doloribus.</p>
-        <img src="https://www.google.com/imgres?q=zona%20urbana&imgurl=https%3A%2F%2Fhumanidades.com%2Fwp-content%2Fuploads%2F2023%2F06%2Fzona-urbana-1.jpg&imgrefurl=https%3A%2F%2Fhumanidades.com%2Fzona-urbana%2F&docid=oFOQEgtiLIoWqM&tbnid=R5clCZXas3pFPM&vet=12ahUKEwi64eLN3KCNAxWImYQIHW-7JPEQM3oECBkQAA..i&w=800&h=400&hcb=2&ved=2ahUKEwi64eLN3KCNAxWImYQIHW-7JPEQM3oECBkQAA" alt="ZonaUrbana">
-    </section>
-    <br><br><br><br>
-    <footer>
-        <p>&copy; 2025 Portal Ciudadano. Todos los derechos reservados. &reg; created by [Juan,Iyer - jsis]</p>
-    </footer>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-warehouse"></i> Sistema de Inventario</h1>
+            <p>Genera informes de inventario de manera rápida y eficiente</p>
+        </header>
+        
+        <div class="content">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">
+                            <i class="fas fa-exclamation-circle"></i> {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            
+            <form action="{{ url_for('procesar_archivo') }}" method="post" enctype="multipart/form-data">
+                <div class="upload-box" id="upload-box">
+                    <i class="fas fa-file-excel upload-icon"></i>
+                    <h2>Selecciona tu archivo de inventario</h2>
+                    <p>Arrastra y suelta tu archivo Excel o haz clic en el botón</p>
+                    <input type="file" name="archivo" id="archivo" class="file-input" accept=".xlsx, .xls">
+                    <label for="archivo" class="file-label">
+                        <i class="fas fa-upload"></i> Seleccionar archivo
+                    </label>
+                    <div id="filename-display" class="filename-display"></div>
+                </div>
+                
+                <button type="submit" class="submit-btn" id="submit-btn" disabled>
+                    <i class="fas fa-cogs"></i> Procesar inventario
+                </button>
+            </form>
+            
+            <div class="instructions">
+                <h3><i class="fas fa-info-circle"></i> Instrucciones</h3>
+                <ul>
+                    <li>El archivo Excel debe contener las columnas: Producto, Cantidad y Precio Unitario</li>
+                    <li>Se calculará automáticamente el Valor Total para cada producto</li>
+                    <li>Se generará un informe con el total del inventario al final</li>
+                    <li>El informe estará disponible para descargar inmediatamente</li>
+                </ul>
+            </div>
+        </div>
+        
+        <footer>
+            <p>&copy; 2025 Sistema de Inventario | Desarrollado con <i class="fas fa-heart" style="color:#dc3545"></i></p>
+        </footer>
+    </div>
+    
+    <script>
+        const fileInput = document.getElementById('archivo');
+        const submitBtn = document.getElementById('submit-btn');
+        const filenameDisplay = document.getElementById('filename-display');
+        const uploadBox = document.getElementById('upload-box');
+        
+        fileInput.addEventListener('change', function() {
+            if (fileInput.files.length > 0) {
+                const fileName = fileInput.files[0].name;
+                filenameDisplay.textContent = `Archivo seleccionado: ${fileName}`;
+                filenameDisplay.style.display = 'block';
+                submitBtn.disabled = false;
+            } else {
+                filenameDisplay.style.display = 'none';
+                submitBtn.disabled = true;
+            }
+        });
+        
+        // Soporte para arrastrar y soltar
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            uploadBox.addEventListener(eventName, preventDefaults, false);
+        });
+        
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        
+        ['dragenter', 'dragover'].forEach(eventName => {
+            uploadBox.addEventListener(eventName, highlight, false);
+        });
+        
+        ['dragleave', 'drop'].forEach(eventName => {
+            uploadBox.addEventListener(eventName, unhighlight, false);
+        });
+        
+        function highlight() {
+            uploadBox.style.backgroundColor = 'rgba(74, 111, 165, 0.2)';
+            uploadBox.style.borderStyle = 'solid';
+        }
+        
+        function unhighlight() {
+            uploadBox.style.backgroundColor = 'rgba(74, 111, 165, 0.05)';
+            uploadBox.style.borderStyle = 'dashed';
+        }
+        
+        uploadBox.addEventListener('drop', handleDrop, false);
+        
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            
+            if (files.length > 0) {
+                fileInput.files = files;
+                const fileName = files[0].name;
+                filenameDisplay.textContent = `Archivo seleccionado: ${fileName}`;
+                filenameDisplay.style.display = 'block';
+                submitBtn.disabled = false;
+            }
+        }
+    </script>
 </body>
 </html>
