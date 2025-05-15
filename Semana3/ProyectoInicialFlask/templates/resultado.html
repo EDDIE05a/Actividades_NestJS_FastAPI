@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informe Generado - Sistema de Inventario</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='static/css/resultado.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-warehouse"></i> Sistema de Inventario</h1>
+            <p>Informes de inventario generados con éxito</p>
+        </header>
+        
+        <div class="content">
+            <div class="success-message">
+                <i class="fas fa-check-circle success-icon"></i>
+                <h2>¡Informe generado con éxito!</h2>
+                <p>Tu archivo de inventario ha sido procesado correctamente y el informe está listo para descargar.</p>
+                <a href="{{ url_for('descargar_archivo', filename=archivo_salida) }}" class="download-btn">
+                    <i class="fas fa-download"></i> Descargar informe
+                </a>
+            </div>
+            
+            <!-- <h2><i class="fas fa-chart-bar"></i> Estadísticas del inventario</h2>
+            
+            <div class="stats-container">
+                <div class="stat-card">
+                    <div class="icon"><i class="fas fa-boxes"></i></div>
+                    <h3>Total de productos</h3>
+                    <p>{{ stats.total_productos }}</p>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="icon"><i class="fas fa-dollar-sign"></i></div>
+                    <h3>Valor total</h3>
+                    <p>{{ stats.valor_total }}</p>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="icon"><i class="fas fa-gem"></i></div>
+                    <h3>Producto más caro</h3>
+                    <p>{{ stats.producto_mas_caro }}</p>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="icon"><i class="fas fa-layer-group"></i></div>
+                    <h3>Mayor cantidad</h3>
+                    <p>{{ stats.producto_mas_cantidad }}</p>
+                </div>
+            </div>
+            
+            <a href="{{ url_for('index') }}" class="back-btn">
+                <i class="fas fa-arrow-left"></i> Procesar otro archivo
+            </a>
+        </div> -->
+        
+        <footer>
+            <p>&copy; 2025 Sistema de Inventario | Desarrollado con <i class="fas fa-heart" style="color:#dc3545"></i></p>
+        </footer>
+    </div>
+</body>
+</html>
